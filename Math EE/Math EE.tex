@@ -64,7 +64,7 @@
  		\textbf{Subject:} Mathematics
         \vspace{0.2cm}
         
-        \textbf{Topic:} Cryptography
+        \textbf{Topic:} Public-Key Cryptography
         \vspace{2.5cm}
 		
 		
@@ -88,12 +88,12 @@
 
 
 \newpage
-\section{An introduction into modern cryptography}
+\section{An introduction into modern public-key cryptography}
 
 
-\indent Throughout history, beginning from the days of the Caesar cipher, individuals have wanted to exchange secret messages. To encrypt and decrypt these messages there has always been a secret \textbf{key} that both ends needed to have. This is called symmetric cryptography where both the sender and the receiver have to have the same key. This is very dangerous as if a malicious user got a hold of the key. They could decrypt the message very easily.
+\indent Throughout history, beginning from the days of the Caesar cipher, individuals have wanted to exchange secret messages. To encrypt and decrypt these messages there has always been a secret \textbf{key} that both ends needed to have. This method is called symmetric cryptography where both the sender and the receiver have to have the same key. This is very dangerous as if a malicious user got a hold of the key, they could decrypt the message very easily.
 
-Modern application use  public key cryptography. In it, there are two keys. One is public, everyone has it. The other one is private. The encrypted message is secured using a \textit{public key}, and can only be decrypted using a that same user's \textit{private key}. This makes sense that only the intended receiver can decipher a message sent to them if encrypted with that user's \textit{public key}.
+Modern application use  public key cryptography which is assymetric in nature. That means that the encryption and decryption keys are different. In it, there are two keys. One is public, everyone has it. The other one is private. The encrypted message is secured using a \textit{public key}, and can only be decrypted using a that same user's \textit{private key}. This makes sense that only the intended receiver can decipher a message sent to them with their \textit{private key} if encrypted with that their own \textit{public key}.
 
 Hence, for the purposes of modern cryptography, messages are exchanged without the risk associated with symmetric encryption. This negates the risk associated with a stolen key, making it near impossible for malicious users to decipher messages. So, now it brings us to the question \textbf{``How do modern cryptographic methods effectively secure online communications, transactions, and the internet?"}
 
@@ -101,12 +101,12 @@ Hence, for the purposes of modern cryptography, messages are exchanged without t
 
 Let us define two individuals who want to send each other a secret parcel. Let their names be Alice and Bob wherein Alice is the sender and Bob is the receiver.
 \begin{enumerate}
-	\item First Bob sends an unlocked padlock to Alice (Bob would send that to anyone even someone he doesn't really trust). This is the public key. The only use of an unlocked padlock is to send Bob a parcel since Bob is the only one who has the key that can open the padlock.
+	\item First Bob sends an unlocked padlock to Alice (Bob would send that to anyone even someone he doesn't really trust). This is the \textit{public key}. The only use of an unlocked padlock is to send Bob a parcel since Bob is the only one who has the key that can open the padlock.
 	\item Alice locks up the package she wants to send with the padlock Bob sent her. Only Bob can open the package now.
-	\item After receiving the package, Bob can open it with his key.
+	\item After receiving the package, Bob can open it with his \textit{private key}.
 \end{enumerate}
 
-This simple exchange makes the basis of Public Key Cryptography. It involves two keys, different one for encryption (padlock) and decryption (key) and is known as the Public Key Exchange\footnote{Ellis, James H. ``The possibility of secure non-secret digital encryption." \textit{UK Communications Electronics Security Group,} 1970.}.
+This simple exchange makes the basis of Public Key Cryptography. It involves two \textit{keys}, different one for encryption (padlock) and decryption (key) and is known as the Public Key Exchange\footnote{Ellis, James H. ``The possibility of secure non-secret digital encryption." \textit{UK Communications Electronics Security Group,} 1970.}.
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{bobalice}
 	\centering
@@ -181,7 +181,7 @@ In modular arithmetic, the modulo function gives the remainder upon division by 
 
 For example, when $15$ and $-9$ is divided by $12$, they give the same remainder, therefore,
 \begin{equation}
-	a \equiv b \pmod{m} \iff n|a-b
+	a \equiv b \pmod{n} \iff n|a-b
 \end{equation} 
 
 This could be said to be a linear congruence if $a=qn+r$ and $b=ln+r$, that is,
@@ -420,7 +420,7 @@ Let $K+1 = N$, since they are both constants,
 \end{equation}
 Holding true for all $a$ and $N$
 
-From equation \ref{primeproduct}, \ref{phi}, and \ref{ed} we know  $n = p \cdot q$ and $e$ has no common factors with $\phi$. Then we calculate the multiplicative inverse of $e \pmod{\phi}$, i.e. the number $d$, which is the decryption key. Giving, $ed = 1 +$ a multiple of $\phi$, or 
+From equation \ref{primeproduct}, \ref{phi}, and \ref{ed} we know  $n = p \cdot q$ and $e$ has no common factors with $\phi$. Then we calculate the multiplicative inverse of $e \pmod{\phi}$, i.e. the number $d$, which is the decryption key. Giving, $ed = 1 +$ a multiple of $\phi$ represented as $L(\phi)$, 
 \begin{equation} \label{fermatslittle2}
 	ed = L(\phi) +1
 \end{equation}
@@ -458,7 +458,7 @@ The public key is the pair $(e,n)$. But, for decryption you need $d$ (private ke
 Even though $(e,n)$ is public knowledge, $\phi$ is not, so $d$ cannot be calculated since it is the multiplicative inverse of $e \pmod{\phi(n)}$. $n$ is public knowledge though, but it is not factored into $p,q$. As stated, RSA is safe because of the near impossible problem that is prime factorization of large prime numbers. Therefore since factoring $n$ into $p,q$ is almost impossible, it is nearly impossible to get $\phi = (p-1)(q-1)$ and consequently $d$, making RSA safe.
 
 \subsection{Example RSA encryption}
-Following the steps in section \ref{rsaencryptionprocess} we can take a simple example with small prime numbers to show how RSA is securely encrypted\footnote{Popyack, Jeffrey L. ``RSA Calculator." \textit{Introduction to Computer Science,} Drexel University, Oct. 1997, www.cs.drexel.edu/~jpopyack/IntroCS/HW/RSAWorksheet.html. Accessed on 6 Jan. 2019.}.
+Following the steps in section \ref{rsaencryptionprocess} we can take a simple example with small prime numbers to show how RSA is securely encrypted.
 \begin{enumerate}
 	\item Let, $p=7$ and $q=11$
 	\item Therefore, $n=7 \times 11 = 77$
@@ -514,22 +514,26 @@ and,
 Giving our original message in ASCII  as 73 66.This encryption and decryption method has been mathematically proven in section \ref{rsaproof}
 
 \subsection{Primality Tests} \label{primalitytests}
-RSA relies on very large prime numbers for its keys. Due to the inherent nature of prime numbers, there is no such formula that has been devised that can give us a list of primes below $n$. This is what makes the RSA secure as it is very difficult to factor $n$ into $p,q$. Therefore, the best way of finding primes is testing each number for whether it is prime or not. For smaller numbers this is easy, but for larger numbers it is quite difficult, therefore primality tests are used. There are various primality tests such as Miller-Rabin Test and Fermat's test\footnote{Bressoud, David M. ``The RSA Public Key Crypto-System." \textit{Factorization and Primality Testing Undergraduate Texts in Mathematics,} 1989,.} used to do this but for the purpose of this essay they will not be explored.
+RSA relies on very large prime numbers for its keys. Due to the inherent nature of prime numbers, there is no such formula that has been devised that can give us a list of primes below $n$. This is what makes the RSA secure as it is very difficult to factor $n$ into $p,q$. Therefore, the best way of finding primes is testing each number for whether it is prime or not. For smaller numbers this is easy, but for larger numbers it is quite difficult, therefore primality tests are used. There are various primality tests such as Miller-Rabin Test and Fermat's test\footnote{Bressoud, David M. ``The RSA Public Key Crypto-System." \textit{Factorization and Primality Testing Undergraduate Texts in Mathematics,} 1989,.} used to do this but for the purpose of this essay they will not be explored. Regardless of primality tests, RSA is still very secure.
 
 
 \newpage
 \section{Elliptical Curve Cryptography}
-For applications\footnote{Amara, Moncef, and Amar Siad. ``Elliptic Curve Cryptography and Its Applications." \textit{International Workshop on Systems, Signal Processing and Their Applications, WOSSPA,} May 2011.} on the Internet and Blockchain such as securing digital currency and transactions like Bitcoin, ECC or Elliptical Curve Cryptography might seem like better than RSA  due to two smaller bit sizes, that is a smaller $n$, while simultaneously being harder to crack\footnote{Bauer, Johannes. ``Elliptic Curve Cryptography Tutorial." \textit{Johannes Bauer}, www.johannes-bauer.com/compsci/ecc/. Accessed on 19 Sep. 2018.}. The reason for this will be explored further and can be seen in Appendix C.
+For applications\footnote{Amara, Moncef, and Amar Siad. ``Elliptic Curve Cryptography and Its Applications." \textit{International Workshop on Systems, Signal Processing and Their Applications, WOSSPA,} May 2011.} on the Internet and Blockchain such as securing digital currency and transactions like Bitcoin, ECC or Elliptical Curve Cryptography might seem like better than RSA  due to two smaller bit sizes, that is a smaller $n$, while simultaneously being harder to crack\footnote{Bauer, Johannes. ``Elliptic Curve Cryptography Tutorial." \textit{Johannes Bauer}, www.johannes-bauer.com/compsci/ecc/. Accessed on 19 Sept. 2018.}. Appendix C shows a comparison in the bit-sizes required for an equivalent security level in both RSA and ECC.
 \subsection{Introduction} \label{eccintro} 
-Elliptical curves are curves with the formula\footnote{Corbellini, Andrea. ``Elliptic Curve Cryptography: a Gentle Introduction." \textit{Andrea Corbellini Atom,} andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/. Accessed on 24 Sep. 2018.}:
+Elliptical curves are curves with the formula\footnote{Corbellini, Andrea. ``Elliptic Curve Cryptography: a Gentle Introduction." \textit{Andrea Corbellini Atom,} andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/. Accessed on 24 Sept. 2018.}:
 \begin{equation} \label{ellipticalcurve}
 	y^2 =x^3 + ax + b  \pmod p \text{ for all } a,b \in F_p 
 \end{equation}
-Here $y,x,a,b$ are all within $F_p$ wherein can be any finite field $F_p:$ in any modulo $p$ domain $\mathbb{Z}/p\mathbb{Z}$. In this modulo field, we may define subgroup by restricting the domain of the elliptical curve. The coefficients $a$ and $b$ determine what points will be on the curve and are restricted to $\pmod p$. 
+Here $y,x,a,b$ are all within $F_p$ wherein can be any finite field $F_p:$ in any modulo $p$ domain $\mathbb{Z}/p\mathbb{Z}$. In this modulo field, we may define subgroup by restricting the domain of the elliptical curve. 
+\begin{definition}{Subgroup: }
+  A subset $H$ of a group $G$ is a subgroup of $G$ if $H$ is itself a group under the operation in $G$ \footnote{Rodin, Altha. “Subgroups.” \textit{M328K,} University of Texas, Aug. 2000, web.ma.utexas.edu/users/rodin/343K/Subgroups.pdf.}.     
+\end{definition}
+
 
 
 \subsection{Singularity case}
-Another condition is that the coefficients must be such that they avoid a singularity. A singularity could potentially lead to not having 3 distinct roots. In the diagrams\footnote{Davis, Tom R. ``Elliptic Curve Cryptography." \textit{Mathematical Circles} Topics, 3 Nov. 2013, www.geometer.org/mathcircles/ecc.pdf. Accessed on 9 Jan. 2018.} given beneath the  the blue curve is that of $y^2 =x^3 +ax +b$ purple curve is that of $y=x^3 + Ax +B$. For us to take a square root, $x^3+ax+b \geq 0$. Therefore there is no blue curve when the purple line is negative. So, all blue curves include both the positive and negative values of the square root. A singularity occurs when the purple curve is tangent to the $x$-axis.
+Another condition is that the coefficients must be such that they avoid a singularity. A singular curve cannot be used for the purposes of Elliptical Curve Cryptography. In the diagrams\footnote{Davis, Tom R. ``Elliptic Curve Cryptography." \textit{Mathematical Circles} Topics, 3 Nov. 2013, www.geometer.org/mathcircles/ecc.pdf. Accessed on 9 Jan. 2018.} given beneath the  the blue curve is that of $y^2 =x^3 +ax +b$ purple curve is that of $y=x^3 + Ax +B$. For us to take a square root, $x^3+ax+b \geq 0$. Therefore there is no blue curve when the purple line is negative. So, all blue curves include both the positive and negative values of the square root. A singularity occurs when the purple curve is tangent to the $x$-axis.
 \begin{figure}[H]
 	 \centering
      \includegraphics[width=\textwidth]{singularity}
@@ -565,7 +569,7 @@ Taking the derivative of $y=x^3 + Ax +B$,
 	0=4A^3+27B^2
 \end{equation}
 
-From equation \ref{singularitycase} we can see that if $4A^3+27B^2=0$ then there is a singularity, meaning there is a chance that is there are not 3 distinct roots and so the properties discussed in section \ref{properties} will not be valid.
+From equation \ref{singularitycase} we can see that if $4A^3+27B^2=0$ then there is a singularity,  so the properties discussed in section \ref{properties} will not be valid. Therefore, we cannot use a curve with a singularity for ECC.
 
 Hence from now on we will assume the one condition the coefficients of elliptical curves must follow is that:
 \begin{equation}
@@ -576,7 +580,7 @@ Hence from now on we will assume the one condition the coefficients of elliptica
 Elliptical curves have many properties that are useful to making it so secure which are based on the ideas\footnote{Singh, Soram Ranbir, et al. ``A Critical Review on Elliptic Curve Cryptography." \textit{International Conference on Automatic Control and Dynamic Optimization Techniques (ICACDOT),} Sept. 2016.}:
 \begin{itemize}
 	\item A line that is tangent to the curve but also not a vertical line will always intersect precisely one more point, a third point.
-	\item Elliptical curves exist in projective planes. They have a property wherein there exist imaginary points at infinity represented by $\mathcal{O}$. For the purpose of cryptography, $\mathcal{O}$ is an artificial point or zero point that exists ``at infinity" at the coordinates $(0,1,0)$ and will form a vertical line.
+	\item Elliptical curves exist in projective planes. They have a property wherein there exist imaginary points at infinity represented by $\mathcal{O}$. For the purpose of cryptography, $\mathcal{O}$ is an artificial point or zero point that exists ``at infinity" at the coordinates $(0,1,0)$ and will form a vertical line (the reason to why this point exists is out of the scope of this essay).
 \end{itemize}
 
 Using these properties we can define two group operations\footnote{Davis, Tom R. ``Elliptic Curve Cryptography." \textit{Mathematical Circles} Topics, 3 Nov. 2013, www.geometer.org/mathcircles/ecc.pdf. Accessed on 9 Jan. 2018.}:
@@ -697,7 +701,7 @@ Domain parameters are represented as $\{p,a,b,G,n,h\}$ and are the parameters av
 	\item $h$: cofactor
 \end{itemize}
 
-Let us compute an example curve and all the parameters before beginning with the process\footnote{Pierce, Robert. \textit{Elliptic Curve Diffie Hellman,} YouTube, 10 Dec. 2014, www.youtube.com/watch?v=F3zzNa42-tQ. Accessed on 3 Jan. 2019.}.
+Let us compute an example curve and all the parameters before beginning with the process\footnote{Pierce, Robert. ``Elliptic Curve Diffie Hellman," \textit{YouTube,} 10 Dec. 2014, www.youtube.com/watch?v=F3zzNa42-tQ. Accessed on 3 Jan. 2019.}.
 
 	For the purpose of the example let,
 	\begin{equation} \label{sampleellipticalcurve}
@@ -769,7 +773,62 @@ costs are high.
 
 
 
+\cleardoublepage
+\textbf{\Large Works Cited}
+\begin{flushleft}
+\hangindent0.5in
+\sloppy
+\textbf{\large Print}
 
+Amara, Moncef, and Amar Siad. ``Elliptic Curve Cryptography and Its Applications." \textit{International Workshop on Systems, Signal Processing and Their Applications, WOSSPA,} May 2011.
+
+Bressoud, David M. ``The RSA Public Key Crypto-System." \textit{Factorization and Primality Testing Undergraduate Texts in Mathematics,} 1989.
+
+Burton, David M. \textit{Elementary Number Theory.} 7th ed., McGraw-Hill, Higher Education, 2011.
+
+Euclid, and Thomas Little Heath. \textit{The Thirteen Books of Euclids Elements.} Vol. 2, Cambridge University Press, 2015.
+
+Fannon, Paul, et al. \textit{Mathematics Higher Level for the IB Diploma Option Topic 10 Discrete Mathematics.} Cambridge University Press, 2013.
+
+Galbraith, Steven D., and Pierrick Gaudry. ``Recent Progress on the Elliptic Curve Discrete Logarithm Problem." \textit{Designs, Codes and Cryptography,} vol. 78, no. 1, 23 Nov. 2015.
+
+Pettofrezzo, Anthony J., and Donald R. Byrkit.\textit{ Elements of Number Theory.} Prentice-Hall, 1970.
+
+Rivest, R. L., et al. ``A Method for Obtaining Digital Signatures and Public-Key Cryptosystems." \textit{Communications of the ACM,} vol. 21, no. 2, 1 Jan. 1978.
+
+Singh, Soram Ranbir, et al. ``A Critical Review on Elliptic Curve Cryptography." \textit{International Conference on Automatic Control and Dynamic Optimization Techniques (ICACDOT),} Sept. 2016.
+
+Smart, N. P. ``The Discrete Logarithm Problem on Elliptic Curves of Trace One." \textit{Journal of Cryptology,} vol. 12, no. 3, June 1999.
+
+Yin, Xinchun, and Jinliang Zou. ``A Parallel Base Point Choosing Algorithm of ECC on Binary Field." \textit{International Conference on Systems and Informatics (ICSAI),} May 2012.
+\newline
+
+\textbf{\large Online}
+
+Bauer, Johannes. ``Elliptic Curve Cryptography Tutorial." \textit{Johannes Bauer}, www.johannes-bauer.com/compsci/ecc/. Accessed on 19 Sept. 2018.
+
+Corbellini, Andrea. ``Elliptic Curve Cryptography: a Gentle Introduction." \textit{Andrea Corbellini Atom,} andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/. Accessed on 24 Sept. 2018.
+
+Daubechies, Ingrid, and Shannon Hughes. ``Lecture Notes: Cryptography – Part 2." \textit{Math Alive,} Princeton University, web.math.princeton.edu/math\_alive/index.shtml. Accessed on 4 Oct. 2018.
+
+Davis, Tom R. ``Elliptic Curve Cryptography." \textit{Mathematical Circles} Topics, 3 Nov. 2013, www.geometer.org/mathcircles/ecc.pdf. Accessed on 9 Jan. 2018.
+
+``Fermat's Little Theorem." \textit{Brilliant Math \& Science Wiki,} brilliant.org/wiki/fermats-little-theorem/. Accessed on 8 Dec. 2018.
+
+Kaliski, Burt. ``The Mathematics of the RSA Public-Key Cryptosystem." \textit{Mathematics and Statistics Awareness Month,} Mathaware, www.mathaware.org/mam/06/Kaliski.pdf. Accessed on 15 Oct. 2018.
+
+Lynn, Ben. ``Number Theory." \textit{Applied Cryptography Group,} Stanford University, crypto.stanford.edu/pbc/notes/numbertheory/crt.html. Accessed on 1 Oct 2018.
+
+\newpage
+
+Ouwehand, Martin. ``The (Simple) Mathematics of RSA." \textit{L'Autorité De Certification De L'EPFL,} certauth.epfl.ch/rsa/. Accessed on 15 Oct. 2018.
+
+Pierce, Robert. ``Elliptic Curve Diffie Hellman," \textit{YouTube,} 10 Dec. 2014, www.youtube.com/watch?v=F3zzNa42-tQ. Accessed on 3 Jan. 2019.
+
+Rodin, Altha. “Subgroups.” \textit{M328K,} University of Texas, Aug. 2000, web.ma.utexas.edu/users/rodin/343K/Subgroups.pdf.
+
+
+\end{flushleft}
 
 
 
@@ -780,7 +839,8 @@ costs are high.
 \cleardoublepage
 \appendix
 \begin{singlespace*}
-\section{Code used in encryption and decryption of RSA}
+\section*{Appendix A \hspace{0.5em} Code used in encryption and decryption of RSA}
+\addcontentsline{toc}{section}{Appendix A \hspace{0.5em} Code used in encryption and decryption of RSA}
 
 \lstdefinestyle{customc}{
   belowcaptionskip=1\baselineskip,
@@ -818,12 +878,14 @@ Output: \textbf{73 66}
 
 
 \newpage
-\section{Recommended RSA parameters}
-The National Institute of Standards and Technology (NIST) part of the United States Department of Commerce recommends the key-size, that is the number of digits of $n$, to be \textbf{2048-bit} for the period of time from the year 2016 to 2030 in the NIST Special Publication 800-57\footnote{United States, Department of Commerce, National Institute of Standards and Technology. "NIST Special Publication 800-57 Part 1 Revision 4" \textit{Recommendation for Key Management Part 1: General,} by Elaine Barker, Jan. 2016, nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf.}.
+\section*{Appendix B \hspace{0.5em} Recommended RSA parameters}
+\addcontentsline{toc}{section}{Appendix B \hspace{0.5em} Recommended RSA parameters}
+The National Institute of Standards and Technology (NIST) part of the United States Department of Commerce recommends the key-size, that is the number of digits of $n$, to be \textbf{2048-bit} for the period of time from the year 2016 to 2030 in the NIST Special Publication 800-57.
 
 
 \newpage
-\section{RSA vs. ECC, a comparison of key-size to security level} 
+\section*{Appendix C \hspace{0.5em} RSA vs. ECC, a comparison of key-size to security level} 
+\addcontentsline{toc}{section}{Appendix C \hspace{0.5em} RSA vs. ECC, a comparison of key-size to security level}
 \begin{figure*}[h]
 	\captionsetup{labelformat=empty}
 	\caption{United States, Department of Commerce, National Institute of Standards and Technology. "NIST Special Publication 800-57 Part 1 Revision 4" \textit{Recommendation for Key Management Part 1: General,} by Elaine Barker, Jan. 2016, nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf, p. 53.}
@@ -832,7 +894,8 @@ The National Institute of Standards and Technology (NIST) part of the United Sta
 \end{figure*}
 
 \newpage
-\section{ASCII values of most common symbols} \label{app:ascii}
+\section*{Appendix D \hspace{0.5em} ASCII values of most common symbols} \label{app:ascii}
+\addcontentsline{toc}{section}{Appendix D \hspace{0.5em} ASCII values of most common symbols}
 
 \begin{figure}[!htb]
 	\captionsetup{labelformat=empty}
@@ -847,60 +910,7 @@ The National Institute of Standards and Technology (NIST) part of the United Sta
 
 
 
-\cleardoublepage
-\textbf{\Large Works Cited}
-\begin{flushleft}
-\hangindent0.5in
-\sloppy
-\textbf{\large Print}
 
-Amara, Moncef, and Amar Siad. ``Elliptic Curve Cryptography and Its Applications." \textit{International Workshop on Systems, Signal Processing and Their Applications, WOSSPA,} May 2011.
-
-Bressoud, David M. ``The RSA Public Key Crypto-System." \textit{Factorization and Primality Testing Undergraduate Texts in Mathematics,} 1989,.
-
-Burton, David M. \textit{Elementary Number Theory.} 7th ed., McGraw-Hill, Higher Education, 2011.
-
-Euclid, and Thomas Little Heath. \textit{The Thirteen Books of Euclids Elements.} Vol. 2, Cambridge University Press, 2015.
-
-Fannon, Paul, et al. \textit{Mathematics Higher Level for the IB Diploma Option Topic 10 Discrete Mathematics.} Cambridge University Press, 2013.
-
-Galbraith, Steven D., and Pierrick Gaudry. ``Recent Progress on the Elliptic Curve Discrete Logarithm Problem." \textit{Designs, Codes and Cryptography,} vol. 78, no. 1, 23 Nov. 2015.
-
-Pettofrezzo, Anthony J., and Donald R. Byrkit.\textit{ Elements of Number Theory.} Prentice-Hall, 1970.
-
-Rivest, R. L., et al. ``A Method for Obtaining Digital Signatures and Public-Key Cryptosystems." \textit{Communications of the ACM,} vol. 21, no. 2, 1 Jan. 1978.
-
-Singh, Soram Ranbir, et al. ``A Critical Review on Elliptic Curve Cryptography." \textit{International Conference on Automatic Control and Dynamic Optimization Techniques (ICACDOT),} Sept. 2016.
-
-Smart, N. P. ``The Discrete Logarithm Problem on Elliptic Curves of Trace One." \textit{Journal of Cryptology,} vol. 12, no. 3, June 1999.
-
-Yin, Xinchun, and Jinliang Zou. ``A Parallel Base Point Choosing Algorithm of ECC on Binary Field." \textit{International Conference on Systems and Informatics (ICSAI),} May 2012.
-\newline
-
-\textbf{\large Online}
-
-Bauer, Johannes. ``Elliptic Curve Cryptography Tutorial." \textit{Johannes Bauer}, www.johannes-bauer.com/compsci/ecc/. Accessed on 19 Sep. 2018.
-
-Corbellini, Andrea. ``Elliptic Curve Cryptography: a Gentle Introduction." \textit{Andrea Corbellini Atom,} andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/. Accessed on 24 Sep. 2018.
-
-Daubechies, Ingrid, and Shannon Hughes. ``Lecture Notes: Cryptography – Part 2." \textit{Math Alive,} Princeton University, web.math.princeton.edu/math\_alive/index.shtml. Accessed on 4 Oct. 2018.
-
-Davis, Tom R. ``Elliptic Curve Cryptography." \textit{Mathematical Circles} Topics, 3 Nov. 2013, www.geometer.org/mathcircles/ecc.pdf. Accessed on 9 Jan. 2018.
-
-``Fermat's Little Theorem." \textit{Brilliant Math \& Science Wiki,} brilliant.org/wiki/fermats-little-theorem/. Accessed on 8 Dec. 2018.
-
-Kaliski, Burt. ``The Mathematics of the RSA Public-Key Cryptosystem." \textit{Mathematics and Statistics Awareness Month,} Mathaware, www.mathaware.org/mam/06/Kaliski.pdf. Accessed on 15 Oct. 2018.
-
-Lynn, Ben. ``Number Theory." \textit{Applied Cryptography Group,} Stanford University, crypto.stanford.edu/pbc/notes/numbertheory/crt.html. Accessed on 1 Oct 2018.
-
-Ouwehand, Martin. ``The (Simple) Mathematics of RSA." \textit{L'Autorité De Certification De L'EPFL,} certauth.epfl.ch/rsa/. Accessed on 15 Oct. 2018.
-
-Pierce, Robert. \textit{Elliptic Curve Diffie Hellman,} YouTube, 10 Dec. 2014, www.youtube.com/watch?v=F3zzNa42-tQ. Accessed on 3 Jan. 2019.
-
-Popyack, Jeffrey L. ``RSA Calculator." \textit{Introduction to Computer Science,} Drexel University, Oct. 1997, www.cs.drexel.edu/~jpopyack/IntroCS/HW/RSAWorksheet.html. Accessed on 6 Jan. 2019.
-
-
-\end{flushleft}
 
 
 
